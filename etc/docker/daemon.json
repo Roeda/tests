@@ -1,34 +1,18 @@
 {
-    "default-runtime": "runsc-systrap",
+    "default-runtime": "runsc-kvm",
     "runtimes": {
         "runsc-kvm": {
             "path": "/usr/local/bin/runsc",
             "runtimeArgs": [
                 "--platform=kvm",
-                "--network=host"
+                "--overlay2=all:memory"
             ]
         },
-        "runsc-systrap": {
-            "path": "/usr/local/bin/runsc",
-            "runtimeArgs": [
-                "--platform=systrap",
-                "--network=host"
-            ]
-        },
-        "runsc-kvm --host-uds=open": {
+        "runsc-kvm-host": {
             "path": "/usr/local/bin/runsc",
             "runtimeArgs": [
                 "--platform=kvm",
-                "--network=host",
-                "--host-uds=open"
-            ]
-        },
-        "runsc-systrap --host-uds=open": {
-            "path": "/usr/local/bin/runsc",
-            "runtimeArgs": [
-                "--platform=systrap",
-                "--network=host",
-                "--host-uds=open"
+                "--network=host"
             ]
         }
     },
