@@ -190,16 +190,16 @@ storage:
   files:
     - path: /etc/zincati/config.d/51-rollout-wariness.toml
       contents:
-        source: https://raw.githubusercontent.com/TommyTran732/Fedora-CoreOS-Ignition/main/etc/zincati/config.d/51-rollout-wariness.toml
+        source: https://raw.githubusercontent.com/Roeda/tests/main/etc/zincati/config.d/51-rollout-wariness.toml
     - path: /etc/zincati/config.d/55-updates-strategy.toml
       contents:
-        source: https://raw.githubusercontent.com/TommyTran732/Fedora-CoreOS-Ignition/main/etc/zincati/config.d/55-updates-strategy.toml
+        source: https://raw.githubusercontent.com/Roeda/tests/main/etc/zincati/config.d/55-updates-strategy.toml
     - path: /etc/yum.repos.d/_copr:copr.fedorainfracloud.org:secureblue:hardened_malloc.repo
       contents:
-        source: https://raw.githubusercontent.com/TommyTran732/Fedora-CoreOS-Ignition/main/etc/yum.repos.d/_copr:copr.fedorainfracloud.org:secureblue:hardened_malloc.repo
+        source: https://raw.githubusercontent.com/Roeda/tests/main/etc/yum.repos.d/_copr:copr.fedorainfracloud.org:secureblue:hardened_malloc.repo
     - path: /etc/yum.repos.d/docker-ce.repo
       contents:
-        source: https://raw.githubusercontent.com/TommyTran732/Fedora-CoreOS-Ignition/main/etc/yum.repos.d/docker-ce.repo
+        source: https://raw.githubusercontent.com/Roeda/tests/main/etc/yum.repos.d/docker-ce.repo
     - path: /etc/docker/daemon.json
       contents:
         source: https://raw.githubusercontent.com/Roeda/tests/main/etc/docker/daemon.json
@@ -249,7 +249,7 @@ storage:
         source: https://raw.githubusercontent.com/TommyTran732/Linux-Setup-Scripts/main/etc/sysconfig/chronyd
     - path: /etc/unbound/unbound.conf
       contents:
-        source: https://raw.githubusercontent.com/TommyTran732/Fedora-CoreOS-Ignition/main/etc/unbound/unbound.conf
+        source: https://raw.githubusercontent.com/Roeda/tests/main/etc/unbound/unbound.conf
     - path: /etc/systemd/system/unbound.service.d/override.conf
       contents:
         source: https://raw.githubusercontent.com/TommyTran732/Linux-Setup-Scripts/main/etc/systemd/system/unbound.service.d/override.conf
