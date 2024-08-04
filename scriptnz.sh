@@ -384,49 +384,13 @@ init_zitadel() {
   export ZITADEL_ADMIN_PASSWORD
 }
 
-check_nb_domain() {
-  DOMAIN=$1
-  if [ "$DOMAIN-x" == "-x" ]; then
-    echo "The NETBIRD_DOMAIN variable cannot be empty." > /dev/stderr
-    return 1
-  fi
-
-  if [ "$DOMAIN" == "netbird.example.com" ]; then
-    echo "The NETBIRD_DOMAIN cannot be netbird.example.com" > /dev/stderr
-    return 1
-  fi
-  return 0
-}
-
-read_nb_domain() {
-  READ_NETBIRD_DOMAIN=""
-  echo -n "Enter the domain you want to use for NetBird (e.g. netbird.my-domain.com): " > /dev/stderr
-  read -r READ_NETBIRD_DOMAIN < /dev/tty
-  if ! check_nb_domain "$READ_NETBIRD_DOMAIN"; then
-    read_nb_domain
-  fi
-  echo "$READ_NETBIRD_DOMAIN"
-}
-
 initEnvironment() {
-  ZITADEL_EXTERNALSECURE="false"
-  ZITADEL_TLS_MODE="disabled"
-  ZITADEL_MASTERKEY="$(openssl rand -base64 32 | head -c 32)"
-  NETBIRD_PORT=80
-  NETBIRD_HTTP_PROTOCOL="http"
-
-  if ! check_nb_domain "$NETBIRD_DOMAIN"; then
-    NETBIRD_DOMAIN=$(read_nb_domain)
-  fi
-
-  if [ "$NETBIRD_DOMAIN" == "use-ip" ]; then
-    NETBIRD_DOMAIN=$(get_main_ip_address)
-  else
+    NETBIRD_DOMAIN=net.wstdarna.com
     ZITADEL_EXTERNALSECURE="true"
     ZITADEL_TLS_MODE="external"
+    ZITADEL_MASTERKEY="$(openssl rand -base64 32 | head -c 32)"
     NETBIRD_PORT=4433
     NETBIRD_HTTP_PROTOCOL="https"
-  fi
 
   if [[ "$OSTYPE" == "darwin"* ]]; then
       ZIDATE_TOKEN_EXPIRATION_DATE=$(date -u -v+30M "+%Y-%m-%dT%H:%M:%SZ")
