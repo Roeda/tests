@@ -647,7 +647,6 @@ services:
       "--single-account-mode-domain=netbird.selfhosted",
       "--dns-domain=netbird.selfhosted",
       "--idp-sign-key-refresh-enabled",
-      "--disable-letsencrypt=true",
     ]
     logging:
       driver: "json-file"
