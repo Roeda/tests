@@ -385,7 +385,7 @@ init_zitadel() {
 }
 
 initEnvironment() {
-    NETBIRD_DOMAIN=net.wstdarna.com
+    NETBIRD_DOMAIN="net.wstdarna.com"
     ZITADEL_EXTERNALSECURE="true"
     ZITADEL_TLS_MODE="external"
     ZITADEL_MASTERKEY="$(openssl rand -base64 32 | head -c 32)"
