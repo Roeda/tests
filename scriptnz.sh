@@ -424,7 +424,7 @@ initEnvironment() {
   else
     ZITADEL_EXTERNALSECURE="true"
     ZITADEL_TLS_MODE="external"
-    NETBIRD_PORT=443
+    NETBIRD_PORT=4433
     NETBIRD_HTTP_PROTOCOL="https"
   fi
 
@@ -554,7 +554,7 @@ AUTH_SUPPORTED_SCOPES="openid profile email offline_access"
 AUTH_REDIRECT_URI=/nb-auth
 AUTH_SILENT_REDIRECT_URI=/nb-silent-auth
 # SSL
-NGINX_SSL_PORT=443
+NGINX_SSL_PORT=4433
 # Letsencrypt
 LETSENCRYPT_DOMAIN=none
 EOF
