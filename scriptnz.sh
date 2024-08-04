@@ -581,6 +581,20 @@ renderDockerCompose() {
   cat <<EOF
 version: "3.4"
 services:
+  # UI dashboard
+  dashboard:
+    image: netbirdio/dashboard:latest
+    restart: unless-stopped
+    networks: [netbird]
+    ports:
+      - '80:80'
+    env_file:
+      - ./dashboard.env
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "500m"
+        max-file: "2"
   # Signal
   signal:
     image: netbirdio/signal:latest
