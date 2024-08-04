@@ -612,7 +612,7 @@ services:
     image: netbirdio/management:latest
     restart: unless-stopped
     networks: [netbird]
-        ports:
+    ports:
       - '80:80'
     volumes:
       - netbird_management:/var/lib/netbird
@@ -635,6 +635,8 @@ services:
   zitadel:
     restart: 'always'
     networks: [netbird]
+    ports:
+      - '8080:8080'
     image: 'ghcr.io/zitadel/zitadel:v2.54.3'
     command: 'start-from-init --masterkeyFromEnv --tlsMode $ZITADEL_TLS_MODE'
     env_file:
@@ -642,8 +644,6 @@ services:
     depends_on:
       zdb:
         condition: 'service_healthy'
-    ports:
-      - '8080:8080'
     volumes:
       - ./machinekey:/machinekey
       - netbird_zitadel_certs:/zdb-certs:ro
