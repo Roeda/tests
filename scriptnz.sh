@@ -410,20 +410,13 @@ initEnvironment() {
     echo "Be aware that this will remove all data from the database, and you will have to reconfigure the dashboard."
     exit 1
   fi
-
-  if [[ $ZITADEL_DATABASE == "cockroach" ]]; then
-        echo "Use CockroachDB as Zitadel database."
-        ZDB=$(renderDockerComposeCockroachDB)
-        ZITADEL_DB_ENV=$(renderZitadelCockroachDBEnv)
-  else
-      echo "Use Postgres as default Zitadel database."
-      echo "For using CockroachDB please the environment variable 'export ZITADEL_DATABASE=cockroach'."
-      POSTGRES_ROOT_PASSWORD="$(openssl rand -base64 32 | sed 's/=//g')@"
-      POSTGRES_ZITADEL_PASSWORD="$(openssl rand -base64 32 | sed 's/=//g')@"
-      ZDB=$(renderDockerComposePostgres)
-      ZITADEL_DB_ENV=$(renderZitadelPostgresEnv)
-      renderPostgresEnv > zdb.env
-  fi
+  
+    echo "Use Postgres as default Zitadel database."
+    POSTGRES_ROOT_PASSWORD="$(openssl rand -base64 32 | sed 's/=//g')@"
+    POSTGRES_ZITADEL_PASSWORD="$(openssl rand -base64 32 | sed 's/=//g')@"
+    ZDB=$(renderDockerComposePostgres)
+    ZITADEL_DB_ENV=$(renderZitadelPostgresEnv)
+    renderPostgresEnv > zdb.env
 
   echo Rendering initial files...
   renderDockerCompose > docker-compose.yml
@@ -541,21 +534,6 @@ $ZITADEL_DB_ENV
 EOF
 }
 
-renderZitadelCockroachDBEnv() {
-  cat <<EOF
-ZITADEL_DATABASE_COCKROACH_HOST=zdb
-ZITADEL_DATABASE_COCKROACH_USER_USERNAME=zitadel_user
-ZITADEL_DATABASE_COCKROACH_USER_SSL_MODE=verify-full
-ZITADEL_DATABASE_COCKROACH_USER_SSL_ROOTCERT="/zdb-certs/ca.crt"
-ZITADEL_DATABASE_COCKROACH_USER_SSL_CERT="/zdb-certs/client.zitadel_user.crt"
-ZITADEL_DATABASE_COCKROACH_USER_SSL_KEY="/zdb-certs/client.zitadel_user.key"
-ZITADEL_DATABASE_COCKROACH_ADMIN_SSL_MODE=verify-full
-ZITADEL_DATABASE_COCKROACH_ADMIN_SSL_ROOTCERT="/zdb-certs/ca.crt"
-ZITADEL_DATABASE_COCKROACH_ADMIN_SSL_CERT="/zdb-certs/client.root.crt"
-ZITADEL_DATABASE_COCKROACH_ADMIN_SSL_KEY="/zdb-certs/client.root.key"
-EOF
-}
-
 renderZitadelPostgresEnv() {
   cat <<EOF
 ZITADEL_DATABASE_POSTGRES_HOST=zdb
@@ -585,7 +563,11 @@ services:
   dashboard:
     image: netbirdio/dashboard:latest
     restart: unless-stopped
-    networks: [netbird]
+    network_mode: bridge
+    links:
+      - management
+      - zitadel
+      - signal
     ports:
       - '80:80'
     env_file:
@@ -599,7 +581,11 @@ services:
   signal:
     image: netbirdio/signal:latest
     restart: unless-stopped
-    networks: [netbird]
+    network_mode: bridge
+    links:
+      - management
+      - zitadel
+      - dashboard
     ports:
       - '10000:10000'
     logging:
@@ -611,7 +597,11 @@ services:
   management:
     image: netbirdio/management:latest
     restart: unless-stopped
-    networks: [netbird]
+    network_mode: bridge
+    links:
+      - zitadel
+      - signal
+      - dashboard
     ports:
       - '80:80'
     volumes:
@@ -634,10 +624,15 @@ services:
   # Zitadel - identity provider
   zitadel:
     restart: 'always'
-    networks: [netbird]
+    network_mode: bridge
+    links:
+      - zdb
+      - management
+      - signal
+      - dashboard
     ports:
       - '8080:8080'
-    image: 'ghcr.io/zitadel/zitadel:v2.54.3'
+    image: 'ghcr.io/zitadel/zitadel:latest'
     command: 'start-from-init --masterkeyFromEnv --tlsMode $ZITADEL_TLS_MODE'
     env_file:
       - ./zitadel.env
@@ -661,42 +656,14 @@ networks:
   netbird:
 EOF
 }
-
-renderDockerComposeCockroachDB() {
-  cat <<EOF
-  # CockroachDB for Zitadel
-  zdb:
-    restart: 'always'
-    networks: [netbird]
-    image: 'cockroachdb/cockroach:latest-v23.2'
-    command: 'start-single-node --advertise-addr zdb'
-    volumes:
-      - netbird_zdb_data:/cockroach/cockroach-data
-      - netbird_zdb_certs:/cockroach/certs
-      - netbird_zitadel_certs:/zitadel-certs
-    healthcheck:
-      test: [ "CMD", "curl", "-f", "http://localhost:8080/health?ready=1" ]
-      interval: '10s'
-      timeout: '30s'
-      retries: 5
-      start_period: '20s'
-    logging:
-      driver: "json-file"
-      options:
-        max-size: "500m"
-        max-file: "2"
-
-volumes:
-  netbird_zdb_certs:
-EOF
-}
-
 renderDockerComposePostgres() {
   cat <<EOF
   # Postgres for Zitadel
   zdb:
     restart: 'always'
-    networks: [netbird]
+    network_mode: bridge
+    links:
+      - zitadel
     image: 'postgres:16-alpine'
     env_file:
       - ./zdb.env
