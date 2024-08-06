@@ -449,12 +449,6 @@ initEnvironment() {
 renderManagementJson() {
   cat <<EOF
 {
-    "Stuns": [
-        {
-            "Proto": "udp",
-            "URI": "stun:$NETBIRD_DOMAIN:3478"
-        }
-    ],
     "Signal": {
         "Proto": "$NETBIRD_HTTP_PROTOCOL",
         "URI": "$NETBIRD_DOMAIN:$NETBIRD_PORT"
