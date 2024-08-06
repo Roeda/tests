@@ -566,6 +566,12 @@ services:
       - '80:80'
     env_file:
       - ./dashboard.env
+    environment:
+      - TZ=Europe/Paris
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
+      - /usr/share/zoneinfo:/usr/share/zoneinfo:ro
     logging:
       driver: "json-file"
       options:
@@ -582,6 +588,12 @@ services:
       - dashboard
     ports:
       - '10000:10000'
+    environment:
+      - TZ=Europe/Paris
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
+      - /usr/share/zoneinfo:/usr/share/zoneinfo:ro
     logging:
       driver: "json-file"
       options:
@@ -598,7 +610,12 @@ services:
       - dashboard
     ports:
       - '80:80'
+    environment:
+      - TZ=Europe/Paris
     volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
+      - /usr/share/zoneinfo:/usr/share/zoneinfo:ro
       - netbird_management:/var/lib/netbird
       - ./management.json:/etc/netbird/management.json
     command: [
@@ -633,7 +650,12 @@ services:
     depends_on:
       zdb:
         condition: 'service_healthy'
+    environment:
+      - TZ=Europe/Paris
     volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
+      - /usr/share/zoneinfo:/usr/share/zoneinfo:ro
       - ./machinekey:/machinekey
       - netbird_zitadel_certs:/zdb-certs:ro
     logging:
@@ -661,7 +683,12 @@ renderDockerComposePostgres() {
     image: 'postgres:16-alpine'
     env_file:
       - ./zdb.env
+    environment:
+      - TZ=Europe/Paris
     volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
+      - /usr/share/zoneinfo:/usr/share/zoneinfo:ro
       - netbird_zdb_data:/var/lib/postgresql/data:rw
     healthcheck:
       test: ["CMD-SHELL", "pg_isready", "-d", "db_prod"]
