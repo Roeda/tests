@@ -554,14 +554,27 @@ renderDockerCompose() {
 version: "3.4"
 services:
   # UI dashboard
+  networks:
+    bridge:
+    ipam:
+      driver: bridge
+      config:
+        - subnet: 242.242.0.0/16
+          ip_range: 242.242.0.0/24
+          gateway: 242.242.0.1
+          aux_addresses:
+            host1: 242.242.0.11
+            host2: 242.242.0.12
+            host3: 242.242.0.13
+            host4: 242.242.0.14
+            host5: 242.242.0.15
   dashboard:
     image: netbirdio/dashboard:latest
     restart: unless-stopped
-    network_mode: bridge
-    links:
-      - management
-      - zitadel
-      - signal
+    networks:
+    networks:
+      bridge:
+        ipv4_address: 242.242.0.11
     ports:
       - '80:80'
     env_file:
@@ -581,7 +594,9 @@ services:
   signal:
     image: netbirdio/signal:latest
     restart: unless-stopped
-    network_mode: bridge
+    networks:
+      bridge:
+        ipv4_address: 242.242.0.12
     links:
       - management
       - zitadel
@@ -603,7 +618,9 @@ services:
   management:
     image: netbirdio/management:latest
     restart: unless-stopped
-    network_mode: bridge
+    networks:
+      bridge:
+        ipv4_address: 242.242.0.13
     links:
       - zitadel
       - signal
@@ -635,7 +652,9 @@ services:
   # Zitadel - identity provider
   zitadel:
     restart: 'always'
-    network_mode: bridge
+    networks:
+      bridge:
+        ipv4_address: 242.242.0.14
     links:
       - zdb
       - management
@@ -677,7 +696,9 @@ renderDockerComposePostgres() {
   # Postgres for Zitadel
   zdb:
     restart: 'always'
-    network_mode: bridge
+    networks:
+      bridge:
+        ipv4_address: 242.242.0.15
     links:
       - zitadel
     image: 'postgres:16-alpine'
