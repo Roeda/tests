@@ -555,9 +555,9 @@ version: "3.4"
 services:
   # UI dashboard
   networks:
-    bridge:
+    bridge1:
     ipam:
-      driver: bridge
+      driver: default
       config:
         - subnet: 242.242.0.0/16
           ip_range: 242.242.0.0/24
@@ -572,7 +572,7 @@ services:
     image: netbirdio/dashboard:latest
     restart: unless-stopped
     networks:
-      bridge:
+      bridge1:
         ipv4_address: 242.242.0.11
     ports:
       - '80:80'
@@ -594,7 +594,7 @@ services:
     image: netbirdio/signal:latest
     restart: unless-stopped
     networks:
-      bridge:
+      bridge1:
         ipv4_address: 242.242.0.12
     links:
       - management
@@ -618,7 +618,7 @@ services:
     image: netbirdio/management:latest
     restart: unless-stopped
     networks:
-      bridge:
+      bridge1:
         ipv4_address: 242.242.0.13
     links:
       - zitadel
@@ -652,7 +652,7 @@ services:
   zitadel:
     restart: 'always'
     networks:
-      bridge:
+      bridge1:
         ipv4_address: 242.242.0.14
     links:
       - zdb
@@ -696,7 +696,7 @@ renderDockerComposePostgres() {
   zdb:
     restart: 'always'
     networks:
-      bridge:
+      bridge1:
         ipv4_address: 242.242.0.15
     links:
       - zitadel
