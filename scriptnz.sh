@@ -572,7 +572,6 @@ services:
     image: netbirdio/dashboard:latest
     restart: unless-stopped
     networks:
-    networks:
       bridge:
         ipv4_address: 242.242.0.11
     ports:
