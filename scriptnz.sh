@@ -555,24 +555,24 @@ version: "3.4"
 services:
   # UI dashboard
   networks:
-    bridge1:
-    ipam:
-      driver: default
-      config:
-        - subnet: 242.242.0.0/16
-          ip_range: 242.242.0.0/24
-          gateway: 242.242.0.1
-          aux_addresses:
-            host1: 242.242.0.11
-            host2: 242.242.0.12
-            host3: 242.242.0.13
-            host4: 242.242.0.14
-            host5: 242.242.0.15
+    bridge:
+      ipam:
+        driver: bridge
+        config:
+          - subnet: 242.242.0.0/16
+            ip_range: 242.242.0.0/24
+            gateway: 242.242.0.1
+            aux_addresses:
+              host1: 242.242.0.11
+              host2: 242.242.0.12
+              host3: 242.242.0.13
+              host4: 242.242.0.14
+              host5: 242.242.0.15
   dashboard:
     image: netbirdio/dashboard:latest
     restart: unless-stopped
     networks:
-      bridge1:
+      bridge:
         ipv4_address: 242.242.0.11
     ports:
       - '80:80'
@@ -594,7 +594,7 @@ services:
     image: netbirdio/signal:latest
     restart: unless-stopped
     networks:
-      bridge1:
+      bridge:
         ipv4_address: 242.242.0.12
     links:
       - management
@@ -618,7 +618,7 @@ services:
     image: netbirdio/management:latest
     restart: unless-stopped
     networks:
-      bridge1:
+      bridge:
         ipv4_address: 242.242.0.13
     links:
       - zitadel
@@ -652,7 +652,7 @@ services:
   zitadel:
     restart: 'always'
     networks:
-      bridge1:
+      bridge:
         ipv4_address: 242.242.0.14
     links:
       - zdb
@@ -696,7 +696,7 @@ renderDockerComposePostgres() {
   zdb:
     restart: 'always'
     networks:
-      bridge1:
+      bridge:
         ipv4_address: 242.242.0.15
     links:
       - zitadel
