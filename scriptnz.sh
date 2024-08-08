@@ -551,7 +551,6 @@ EOF
 
 renderDockerCompose() {
   cat <<EOF
-version: "3.4"
 services:
   # UI dashboard
   networks:
