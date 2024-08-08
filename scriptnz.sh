@@ -556,23 +556,23 @@ services:
   networks:
     bridge:
       ipam:
-        driver: default
+        driver: bridge
         config:
-          - subnet: 242.242.0.0/16
-            ip_range: 242.242.0.0/24
-            gateway: 242.242.0.1
+          - subnet: 242.241.0.0/16
+            ip_range: 242.241.0.0/24
+            gateway: 242.241.0.1
             aux_addresses:
-              host1: 242.242.0.11
-              host2: 242.242.0.12
-              host3: 242.242.0.13
-              host4: 242.242.0.14
-              host5: 242.242.0.15
+              host1: 242.241.0.11
+              host2: 242.241.0.12
+              host3: 242.241.0.13
+              host4: 242.241.0.14
+              host5: 242.241.0.15
   dashboard:
     image: netbirdio/dashboard:latest
     restart: unless-stopped
     networks:
       bridge:
-        ipv4_address: 242.242.0.11
+        ipv4_address: 242.241.0.11
     ports:
       - '80:80'
     env_file:
@@ -594,7 +594,7 @@ services:
     restart: unless-stopped
     networks:
       bridge:
-        ipv4_address: 242.242.0.12
+        ipv4_address: 242.241.0.12
     links:
       - management
       - zitadel
@@ -618,7 +618,7 @@ services:
     restart: unless-stopped
     networks:
       bridge:
-        ipv4_address: 242.242.0.13
+        ipv4_address: 242.241.0.13
     links:
       - zitadel
       - signal
@@ -652,7 +652,7 @@ services:
     restart: 'always'
     networks:
       bridge:
-        ipv4_address: 242.242.0.14
+        ipv4_address: 242.241.0.14
     links:
       - zdb
       - management
@@ -696,7 +696,7 @@ renderDockerComposePostgres() {
     restart: 'always'
     networks:
       bridge:
-        ipv4_address: 242.242.0.15
+        ipv4_address: 242.241.0.15
     links:
       - zitadel
     image: 'postgres:16-alpine'
