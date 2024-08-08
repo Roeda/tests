@@ -557,7 +557,7 @@ networks:
       driver: bridge
         config:
           - subnet: 242.241.0.0/16
-            ip_range: 242.241.0.0/24
+#            ip_range: 242.241.0.0/24
 #            gateway: 242.241.0.1
 #            aux_addresses:
 #              dashboard: 242.241.0.11
