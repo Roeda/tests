@@ -556,7 +556,7 @@ services:
   networks:
     bridge:
       ipam:
-        driver: bridge
+        driver: default
         config:
           - subnet: 242.242.0.0/16
             ip_range: 242.242.0.0/24
