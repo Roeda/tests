@@ -551,20 +551,7 @@ EOF
 
 renderDockerCompose() {
   cat <<EOF
-networks:
-  bridge:
-    ipam:
-      driver: bridge
-      config:
-        - subnet: 242.242.0.0/16
-          ip_range: 242.242.0.0/24
-          gateway: 242.242.0.1
-#          aux_addresses:
-#           dashboard: 242.242.0.11
-#           signal: 242.242.0.12
-#           management: 242.242.0.13
-#           zitadel: 242.242.0.14
-#           zdb: 242.242.0.15
+networks: [netbird]
 services:
   # UI dashboard
 #  network_mode: bridge
@@ -673,8 +660,8 @@ $ZDB
   netbird_management:
   netbird_zitadel_certs:
 
-# networks:
-#   netbird:
+ networks:
+   netbird:
 EOF
 }
 renderDockerComposePostgres() {
