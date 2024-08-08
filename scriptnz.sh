@@ -596,10 +596,6 @@ services:
     networks:
       bridge:
         ipv4_address: 242.242.0.12
-    links:
-      - management
-      - zitadel
-      - dashboard
     ports:
       - '10000:10000'
     environment:
@@ -620,10 +616,6 @@ services:
     networks:
       bridge:
         ipv4_address: 242.242.0.13
-    links:
-      - zitadel
-      - signal
-      - dashboard
     ports:
       - '80:80'
     environment:
@@ -654,11 +646,6 @@ services:
     networks:
       bridge:
         ipv4_address: 242.242.0.14
-    links:
-      - zdb
-      - management
-      - signal
-      - dashboard
     ports:
       - '8080:8080'
     image: 'ghcr.io/zitadel/zitadel:latest'
@@ -698,8 +685,6 @@ renderDockerComposePostgres() {
     networks:
       bridge:
         ipv4_address: 242.242.0.15
-    links:
-      - zitadel
     image: 'postgres:16-alpine'
     env_file:
       - ./zdb.env
