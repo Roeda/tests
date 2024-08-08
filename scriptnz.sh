@@ -685,8 +685,8 @@ $ZDB
   netbird_management:
   netbird_zitadel_certs:
 
-#networks:
-#  netbird:
+# networks:
+#   netbird:
 EOF
 }
 renderDockerComposePostgres() {
