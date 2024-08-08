@@ -553,20 +553,21 @@ renderDockerCompose() {
   cat <<EOF
 services:
   # UI dashboard
-  networks:
-    bridge:
-      ipam:
-        driver: bridge
-        config:
-          - subnet: 242.241.0.0/16
-            ip_range: 242.241.0.0/24
-            gateway: 242.241.0.1
-            aux_addresses:
-              host1: 242.241.0.11
-              host2: 242.241.0.12
-              host3: 242.241.0.13
-              host4: 242.241.0.14
-              host5: 242.241.0.15
+#  networks:
+#    bridge:
+#      ipam:
+#        driver: bridge
+#        config:
+#          - subnet: 242.241.0.0/16
+#            ip_range: 242.241.0.0/24
+#            gateway: 242.241.0.1
+#            aux_addresses:
+#              host1: 242.241.0.11
+#              host2: 242.241.0.12
+#              host3: 242.241.0.13
+#              host4: 242.241.0.14
+#              host5: 242.241.0.15
+  network_mode: bridge
   dashboard:
     image: netbirdio/dashboard:latest
     restart: unless-stopped
