@@ -559,12 +559,12 @@ networks:
           - subnet: 242.241.0.0/16
             ip_range: 242.241.0.0/24
 #            gateway: 242.241.0.1
-            aux_addresses:
-              dashboard: 242.241.0.11
-              signal: 242.241.0.12
-              management: 242.241.0.13
-              zitadel: 242.241.0.14
-              zdb: 242.241.0.15
+#            aux_addresses:
+#              dashboard: 242.241.0.11
+#              signal: 242.241.0.12
+#              management: 242.241.0.13
+#              zitadel: 242.241.0.14
+#              zdb: 242.241.0.15
 services:
   # UI dashboard
 #  network_mode: bridge
