@@ -567,7 +567,7 @@ services:
 #              host3: 242.242.0.13
 #              host4: 242.242.0.14
 #              host5: 242.242.0.15
-  network_mode: bridge
+#  network_mode: bridge
   dashboard:
     image: netbirdio/dashboard:latest
     restart: unless-stopped
