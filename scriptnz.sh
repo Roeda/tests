@@ -560,7 +560,7 @@ services:
         config:
           - subnet: 242.242.0.0/16
             ip_range: 242.242.0.0/24
-            gateway: 242.242.0.1
+#            gateway: 242.242.0.1
 #            aux_addresses:
 #              host1: 242.242.0.11
 #              host2: 242.242.0.12
