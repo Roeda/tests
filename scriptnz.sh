@@ -559,12 +559,12 @@ networks:
           - subnet: 242.242.0.0/16
             ip_range: 242.242.0.0/24
             gateway: 242.242.0.1
-            aux_addresses:
-              host1: 242.242.0.11
-              host2: 242.242.0.12
-              host3: 242.242.0.13
-              host4: 242.242.0.14
-              host5: 242.242.0.15
+#            aux_addresses:
+#              host1: 242.242.0.11
+#              host2: 242.242.0.12
+#              host3: 242.242.0.13
+#              host4: 242.242.0.14
+#              host5: 242.242.0.15
 services:
   # UI dashboard
 #  network_mode: bridge
